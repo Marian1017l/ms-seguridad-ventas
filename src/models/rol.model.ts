@@ -1,4 +1,7 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
+import {Menu} from './menu.model';
+import {RolMenu} from './rol-menu.model';
+import {Usuario} from './usuario.model';
 
 @model()
 export class Rol extends Entity {
@@ -20,10 +23,14 @@ export class Rol extends Entity {
   })
   descripcion?: string;
 
+  @hasMany(() => Menu, {through: {model: () => RolMenu}})
+  menus: Menu[];
 
   constructor(data?: Partial<Rol>) {
     super(data);
   }
+  @hasMany(() => Usuario)
+  usuarios: Usuario[];
 }
 
 export interface RolRelations {
